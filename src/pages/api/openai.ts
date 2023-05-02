@@ -1,10 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from "next-auth/next"
+import { authOptions } from './auth/[...nextauth]'
 import axios from 'axios';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getServerSession(req, res, authOptions)
+  if (!session?.user?.email) {
+    res.status(401).send({ message: 'Unauthorized' })
+    return
+  }
   try {
     const input = req.body.input;
     const model = req.body.model;
