@@ -1,20 +1,25 @@
-import Head from "next/head";
+"use client"
 import Link from 'next/link'
+import Header from '@/app/Header';
+import Head from 'next/head';
 
-export default function FourZeroFour() {
+export default function NotFound() {
     return (
-        <div>
+        <>
             <Head>
                 <title>ページが見つかりません</title>
                 <meta name="description" content="404 not found" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
+            <Header />
+
             <div className="flex flex-col items-start justify-start md:mt-24 md:flex-row md:items-center md:justify-center md:space-x-6">
                 <div className="space-x-2 pt-6 pb-8 md:space-y-5">
                     <h1 className="text-6xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 md:border-r-2 md:px-6 md:text-8xl md:leading-14">
                         404
                     </h1>
                 </div>
-                <div className="max-w-md">
+                <div className="max-w-md text-gray-900 dark:text-gray-100">
                     <p className="mb-4 text-xl font-bold leading-normal md:text-2xl">
                         ページが見つかりません。
                     </p>
@@ -28,6 +33,6 @@ export default function FourZeroFour() {
                     </Link>
                 </div>
             </div>
-        </div>
-    )
+        </>
+    );
 }
