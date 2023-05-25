@@ -3,31 +3,49 @@ import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useSession } from "next-auth/react";
 import CodeBlock from "@/components/CodeBlock";
+import { Message } from "@/types/custom";
 
 export default function Form() {
-
+  const [chats, setChats] = useState<Message[]>([
+    {
+      role: "system",
+      content: "あなたは優秀なチャットボットアシスタントです。質問には正確に答えてください。",
+    },
+  ]);
   const [model, setModel] = useState("chat");
-  const [input, setInput] = useState('');
+  const [message, setMessage] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
   const { status } = useSession();
-
-  const url = process.env.AZURE_OPENAI_ENDPOINT || "";
   const handleClick = async () => {
     setLoading(true);
-    const response = await fetch('/api/openai', {
+    const response = await fetch(`/api/${model}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ model, input }),
+      body: JSON.stringify({ message }),
     });
     const data = await response.json();
     setResult(data.data);
     setLoading(false);
   };
 
-if (status === "unauthenticated") {
+  if (status === "loading") {
+    return (
+      <>
+        <div className="mt-5 p-4 md:col-span-2 md:mt-0">
+          <div className="max-w-md">
+            <p className="mb-8">
+              読み込み中...
+            </p>
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  if (status === "unauthenticated") {
     return (
       <>
         <div className="mt-5 p-4 md:col-span-2 md:mt-0">
@@ -58,8 +76,8 @@ if (status === "unauthenticated") {
                     rows={3}
                     className="mt-1 px-2 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
                     placeholder="ここに質問を入れてください"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                   />
                 </div>
               </div>

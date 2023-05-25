@@ -1,24 +1,35 @@
+// Get Cosmos Client
 import { CosmosClient, Container, Database } from "@azure/cosmos";
 import { ResponseData } from "@/types/custom";
+import dotenv from 'dotenv';
 
-export class ResponseRepository {
-  private client: CosmosClient;
-  private database: Database;
-  private container: Container;
+dotenv.config();
+const endpoint = process.env.AZURE_COSMOS_ENDPOINT || "";
+const key = process.env.AZURE_COSMOS_KEY || "";
+const databaseId = "openai";
+const containerId = "chat";
 
-  constructor(endpoint: string, key: string, databaseId: string, containerId: string) {
-    this.client = new CosmosClient({ endpoint, key });
-    this.database = this.client.database(databaseId);
-    this.container = this.database.container(containerId);
-  }
+export class Cosmos {
 
-  async create(response: ResponseData): Promise<ResponseData> {
+  private client = new CosmosClient({ endpoint, key });
+  private database = this.client.database(databaseId);
+  private container = this.database.container(containerId);
+
+  async create(response: any): Promise<any> {
     const { resource: createdResponse } = await this.container.items.create(response);
+    console.log("created");
     return createdResponse as ResponseData;
   }
 
   async readAll(): Promise<ResponseData[]> {
     const { resources } = await this.container.items.readAll<ResponseData>().fetchAll();
+    console.log("read");
+    return resources;
+  }
+
+  async readByRange(start: string, end: string): Promise<ResponseData[]> {
+    const query = `SELECT * FROM c WHERE c.value BETWEEN ${start} AND ${end}`;
+    const { resources } = await this.container.items.query(query).fetchAll();
     return resources;
   }
 

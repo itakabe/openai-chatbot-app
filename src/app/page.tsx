@@ -53,6 +53,21 @@ const Home: NextPage = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (status === "loading") {
+    return (
+      <>
+        <div className="mt-5 p-4 md:col-span-2 md:mt-0">
+          <div className="max-w-md">
+            <p className="mb-8">
+              読み込み中...
+            </p>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   if (status === "unauthenticated") {
     return (
       <>
@@ -70,7 +85,7 @@ const Home: NextPage = () => {
     )
   }
   return (
-    
+
     <div className="flex flex-col bg-gray-80">
       <div className="space-y-2 pt-6 pb-8 md:space-y-5 grow">
         <AnimatePresence>
