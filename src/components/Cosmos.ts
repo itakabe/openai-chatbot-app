@@ -4,11 +4,7 @@ import { ResponseData } from "@/types/custom";
 import dotenv from 'dotenv';
 
 dotenv.config();
-<<<<<<< HEAD
 const endpoint = process.env.AZURE_COSMOS_ENDPOINT || "https://sample.documents.azure.com:443/";
-=======
-const endpoint = process.env.AZURE_COSMOS_ENDPOINT || "";
->>>>>>> 93e8f3ed0b168c44999019b791aab05c1047c0d0
 const key = process.env.AZURE_COSMOS_KEY || "";
 const databaseId = "openai";
 const containerId = "chat";
