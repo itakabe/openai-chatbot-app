@@ -36,10 +36,11 @@ export default async function history() {
                     </caption>
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th>created</th>
-                            <th>user</th>
-                            <th>responce</th>
-                            <th>tokens</th>
+                            <th>日時</th>
+                            <th>ユーザ</th>
+                            <th>質問</th>
+                            <th>回答</th>
+                            <th>トークン数</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,6 +48,7 @@ export default async function history() {
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={data.id}>
                                 <td>{JSON.stringify(format(new Date(fromUnixTime(data.created)), 'yyyy/MM/dd HH:mm:ss'))}</td>
                                 <td>{JSON.stringify(data.user?.name) || "Unknown"}</td>
+                                <td>{JSON.stringify(data.post?.messages[data.post.messages.length - 1].content)}</td>
                                 <td>{JSON.stringify(data.choices[data.choices.length - 1].message.content)}</td>
                                 <td>{JSON.stringify(data.usage.total_tokens)}</td>
                             </tr>

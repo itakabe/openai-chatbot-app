@@ -35,7 +35,7 @@ const Header = () => {
                         <ul className="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
                             {headerNavLinks.map((link) => (
                                 <li key={link.title}>
-                                    <Link href={link.href} className="text-gray-900 dark:text-white hover:underline" aria-current="page">{link.title}</Link>
+                                    <Link href={link.href} prefetch={false} className="text-gray-900 dark:text-white hover:underline" aria-current="page">{link.title}</Link>
                                 </li>
                             ))}
                         </ul>
