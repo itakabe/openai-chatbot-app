@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
         const message = req.body.message;
-        const url = `${process.env.AZURE_OPENAI_ENDPOINT}/openai/deployments/chat/chat/completions?api-version=2023-03-15-preview` || "";
+        const url = `${process.env.AZURE_OPENAI_ENDPOINT}/openai/deployments/${process.env.AZURE_OPENAI_DEPLOYMENT_NAME}/chat/completions?api-version=${process.env.AZURE_OPENAI_API_VERSION}` || "";
         const maxTokens = 2048;
         const temperature = 0.7;
         const data = {

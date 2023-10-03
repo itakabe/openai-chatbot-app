@@ -17,9 +17,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const model = req.body.model;
     let url;
     if (model ==="chat") {
-      url = `${process.env.AZURE_OPENAI_ENDPOINT}/openai/deployments/chat/chat/completions?api-version=2023-03-15-preview` || "";
+      url = `${process.env.AZURE_OPENAI_ENDPOINT}/openai/deployments/${process.env.AZURE_OPENAI_DEPLOYMENT_NAME}/chat/completions?api-version=${process.env.AZURE_OPENAI_API_VERSION}` || "";
     } else {
-      url = `${process.env.AZURE_OPENAI_ENDPOINT}/openai/deployments/${model}/completions?api-version=2023-03-15-preview` || "";
+      url = `${process.env.AZURE_OPENAI_ENDPOINT}/openai/deployments/${process.env.AZURE_OPENAI_DEPLOYMENT_NAME}/completions?api-version=${process.env.AZURE_OPENAI_API_VERSION}` || "";
     }
     const maxTokens = 2048;
     const temperature = 0.7;
